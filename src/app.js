@@ -18,19 +18,20 @@ app.use(bodyParser.json())
 // Routes
 //////////////////////////////////////////////////////////////////////////////
 
-app.use('/auth', require('./routes/auth'))
+app.use('/', require('./routes/auth'))
 app.use('/users', require('./routes/users'))
+
 
 //////////////////////////////////////////////////////////////////////////////
 // example routes, not part of an organized application
 //////////////////////////////////////////////////////////////////////////////
 
 app.get('/protected',
-        authController.isAuthenticated,
+        authController.authenticated,
         function(req, res, next){ res.send({ id: req.claim.id, message: "For authenticated eyes only" }) })
 
 app.get('/protected/:userId',
-        authController.isAuthenticated,
+        authController.authenticated,
         authController.isSelf,
         function(req, res, next){ res.send({ id: req.claim.id, message: "For your eyes only"}) })
 
