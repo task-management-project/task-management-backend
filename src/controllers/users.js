@@ -62,6 +62,25 @@ function updateTask(req, res, next){
     .catch(next)
 }
 
+function createTeam(req, res, next){
+  if(!req.body.name && !req.body.description){
+    return next({ status: 400, message: 'Bad Request'})
+  }
+  userModel.createTeam(req.params.userId, req.body.name, req.body.description)
+    .then(function(data){
+      return res.status(201).send({ data })
+    })
+    .catch(next)
+}
+
+// function getAllMembersAndTasks(req, res, next){
+//   userModel.getAllMembersAndTasks(req.params.userId, req.params.teamId)
+//     .then(function(data){
+//       res.send({ data })
+//     })
+//     .catch(next)
+// }
+
 module.exports = {
   getOneUser,
   getUserByName,
@@ -69,6 +88,8 @@ module.exports = {
   getAllTasks,
   getOneTask,
   createTask,
-  updateTask
+  updateTask,
+  createTeam,
+  //getAllMembersAndTasks
 }
   

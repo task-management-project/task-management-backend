@@ -67,6 +67,19 @@ function updateTask(taskId, name, description, thoughts, isFocus, isComplete){
     })
 }
 
+function createTeam(userId, name, description){
+  return (
+    knex('teams')
+      .insert({name: name, description: description})
+      .returning('*')
+  ) 
+    .then(([data]) => {
+      return knex('team_membership')
+        .insert({user_id: userId, team_id: data.id, is_manager: true})
+        .returning('*')
+    })  
+}
+
 // * If tasks are connected wich teams
 // function createTask(userId, name, description, team_name){
 //   if(team_name){
@@ -108,6 +121,7 @@ module.exports = {
   getAllTasks,
   getOneTask,
   createTask,
-  updateTask
+  updateTask,
+  createTeam
 }
   
