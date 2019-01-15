@@ -5,9 +5,9 @@ exports.up = function(knex) {
     table.integer('team_id').references('teams.id')
     table.integer('user_id').references('users.id').onDelete('CASCADE').notNullable()
     table.string('name').notNullable()
-    table.text('description')
+    table.text('description').notNullable()
     table.text('thoughts')
-    table.string('status').notNullable()
+    table.string('status').defaultTo('active')
     table.timestamps(true, true)
   })
 };

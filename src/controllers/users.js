@@ -1,5 +1,13 @@
 const userModel = require('../models/users')
 
+function getOneUser(req, res, next){
+  userModel.getOneUser(req.params.userId)
+    .then(function(data){
+      res.send({ data })
+    })
+    .catch(next)
+}
+
 function getUserByName(req, res, next){
   userModel.getUserByName(req.body.username)
     .then(function(data){
@@ -19,9 +27,30 @@ function createUser(req, res, next){
     .catch(next)
 }
 
+function getAllTasks(req, res, next){
+  userModel.getAllTasks(req.params.userId)
+    .then(function(data){
+      res.send({ data })
+    })
+    .catch(next)
+}
+
+// function createTask(req, res, next){
+//   if(!req.body.name && !req.body.password && !req.body.position){
+//     return next({ status: 400, message: 'Bad Request'})
+//   }
+//   userModel.createUser(req.body.username, req.body.password, req.body.position)
+//     .then(function(data){
+//       return res.status(201).send({ data })
+//     })
+//     .catch(next)
+// }
 
 module.exports = {
+  getOneUser,
   getUserByName,
-  createUser
+  createUser,
+  getAllTasks,
+  // createTask
 }
   

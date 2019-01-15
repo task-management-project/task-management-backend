@@ -1,6 +1,19 @@
 const knex = require('../../db/index')
 const bcrypt = require('bcrypt')
 
+function getAllTasks(userId){
+  return knex('tasks')
+    .where({'user_id' : userId})
+    .then()
+}
+
+function getOneUser(userId){
+  return (
+    knex('users')
+      .where({ "id":userId })
+      .returning('*')
+  )
+}
 
 function getUserByName(username){
   return (
@@ -30,7 +43,9 @@ function createUser(username, password, position){
 }
 
 module.exports = {
+  getOneUser,
   getUserByName,
-  createUser
+  createUser,
+  getAllTasks
 }
   
