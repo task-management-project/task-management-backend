@@ -27,13 +27,13 @@ app.use('/', require('./routes/users'))
 //////////////////////////////////////////////////////////////////////////////
 
 app.get('/protected',
-        authController.authenticated,
-        function(req, res, next){ res.send({ id: req.claim.id, message: "For authenticated eyes only" }) })
+  authController.authenticated,
+  function(req, res, next){ res.send({ id: req.claim.id, message: "For authenticated eyes only" }) })
 
 app.get('/protected/:userId',
-        authController.authenticated,
-        authController.isSelf,
-        function(req, res, next){ res.send({ id: req.claim.id, message: "For your eyes only"}) })
+  authController.authenticated,
+  authController.isSelf,
+  function(req, res, next){ res.send({ id: req.claim.id, message: "For your eyes only"}) })
 
 //////////////////////////////////////////////////////////////////////////////
 // Default Route
@@ -67,5 +67,5 @@ app.use(function(err, req, res, next){
 const port = process.env.PORT || 5000
 
 app.listen(port, function(){
-    console.log(`Listening on port ${port}`)
+  console.log(`Listening on port ${port}`)
 })

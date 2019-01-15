@@ -22,7 +22,6 @@ const authenticated = (req, res, next) => {
 
   const [bearer, token] = req.headers.authorization.split(' ')
   jwt.verify(token, process.env.SECRET, (err, payload) => {
-
     if (err) return next({ status: 401, message: 'Unauthorized' })
     req.claim = payload
     next()
@@ -31,7 +30,7 @@ const authenticated = (req, res, next) => {
 
 const isSelf = (req, res, next) => {
   if (parseInt(req.params.userId) !== req.claim.id)
-    return next({ status: 401, message: 'Unauthorized' })
+    return next({ status: 401, message: '---Unauthorized' })
   next()
 }
 

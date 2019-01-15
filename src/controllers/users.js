@@ -17,7 +17,7 @@ function getUserByName(req, res, next){
 }
 
 function createUser(req, res, next){
-  if(!req.body.username && !req.body.password && !req.body.position){
+  if(!req.body.username && !req.body.password){
     return next({ status: 400, message: 'Bad Request'})
   }
   userModel.createUser(req.body.username, req.body.password, req.body.position)
@@ -47,7 +47,7 @@ function createTask(req, res, next){
   if(!req.body.name && !req.body.description){
     return next({ status: 400, message: 'Bad Request'})
   }
-  userModel.createTask(req.params.userId, req.body.name, req.body.description, req.body.team_name)
+  userModel.createTask(req.params.userId, req.body.name, req.body.description)
     .then(function(data){
       return res.status(201).send({ data })
     })
@@ -55,7 +55,7 @@ function createTask(req, res, next){
 }
 
 function updateTask(req, res, next){
-  userModel.updateTask(req.params.taskId, req.body.name, req.body.description, req.body.thoughts, req.body.status)
+  userModel.updateTask(req.params.taskId, req.body.name, req.body.description, req.body.thoughts, req.body.isFocus, req.body.isComplete)
     .then(function(data){
       return res.status(201).send({ data })
     })
