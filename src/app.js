@@ -19,8 +19,8 @@ app.use(bodyParser.json())
 //////////////////////////////////////////////////////////////////////////////
 
 app.use('/', require('./routes/auth'))
-app.use('/users', require('./routes/users'))
-
+app.use('/', require('./routes/users'))
+//app.use('/', require('./routes/teams'))
 
 //////////////////////////////////////////////////////////////////////////////
 // example routes, not part of an organized application
@@ -67,5 +67,5 @@ app.use(function(err, req, res, next){
 const port = process.env.PORT || 5000
 
 app.listen(port, function(){
-  console.log(`Listening on port ${port}`)
+    console.log(`Listening on port ${port}`)
 })
