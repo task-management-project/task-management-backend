@@ -48,60 +48,58 @@ function getOneTask(userId, taskId){
     .then()
 }
 
-function getTeamByName(team_name){
-  return (
-    knex('teams')
-      .where({ "name" : team_name })
-      .first()
-  )
+function createTask(userId, name, description){
+  return knex('tasks')
+    .insert({ user_id: userId, name: name, description: description })
+    .returning('*')
 }
 
-function autoGenerateTeam(userId, name, description){
-  return (
-    knex('teams')
-      .insert({name: name, description: description})
-      .returning('*')
-  ) 
-    .then(([data]) => {
-      return knex('team_membership')
-        .insert({user_id: userId, team_id: data.id, is_manager: true})
-        .returning('*')
-    })  
-}
 
-function createTask(userId, name, description, team_name){
-  if(team_name){
-    return getTeamByName(team_name)
-      .then(data => {
-        return (
-          knex('tasks')
-            .insert({ user_id: userId, team_id: data.id, name: name, description: description})
-            .returning('*')
-        )
-      })
-  } 
-  return autoGenerateTeam(userId, name, description)
-    .then(data => {
-      return (
-        knex('tasks')
-          .insert({ user_id: userId, team_id: data.id, name: name, description: description})
-          .returning('*')
-      )
-    })
-}
-
-function updateTask(taskId, name, description, thoughts, status){
+function updateTask(taskId, name, description, thoughts, isFocus, isComplete){
   return knex('tasks')
     .where({'id': taskId})
     .then(([data]) => {
       if (!data) throw {status: 400, message: "task doesn't exist"}
       return knex('tasks')
-        .update({ name: name, description:description, thoughts:thoughts, status:status })
+        .update({ name: name, description:description, thoughts:thoughts, isFocus:isFocus, isComplete:isComplete })
         .where({'id': taskId})
         .returning('*')
     })
 }
 
+// * If tasks are connected wich teams
+// function createTask(userId, name, description, team_name){
+//   if(team_name){
+//     return getTeamByName(team_name)
+//       .then(data => {
+//         return (
+//           knex('tasks')
+//             .insert({ user_id: userId, team_id: data.id, name: name, description: description})
+//             .returning('*')
+//         )
+//       })
+//   } 
+//   return autoGenerateTeam(userId, name, description)
+//     .then(data => {
+//       return (
+//         knex('tasks')
+//           .insert({ user_id: userId, team_id: data.id, name: name, description: description})
+//           .returning('*')
+//       )
+//     })
+// }
+// function autoGenerateTeam(userId, name, description){
+//   return (
+//     knex('teams')
+//       .insert({name: name, description: description})
+//       .returning('*')
+//   ) 
+//     .then(([data]) => {
+//       return knex('team_membership')
+//         .insert({user_id: userId, team_id: data.id, is_manager: true})
+//         .returning('*')
+//     })  
+// }
 
 module.exports = {
   getOneUser,
