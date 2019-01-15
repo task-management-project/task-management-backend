@@ -35,22 +35,40 @@ function getAllTasks(req, res, next){
     .catch(next)
 }
 
-// function createTask(req, res, next){
-//   if(!req.body.name && !req.body.password && !req.body.position){
-//     return next({ status: 400, message: 'Bad Request'})
-//   }
-//   userModel.createUser(req.body.username, req.body.password, req.body.position)
-//     .then(function(data){
-//       return res.status(201).send({ data })
-//     })
-//     .catch(next)
-// }
+function getOneTask(req, res, next){
+  userModel.getOneTask(req.params.userId, req.params.taskId)
+    .then(function(data){
+      res.send({ data })
+    })
+    .catch(next)
+}
+
+function createTask(req, res, next){
+  if(!req.body.name && !req.body.description){
+    return next({ status: 400, message: 'Bad Request'})
+  }
+  userModel.createTask(req.params.userId, req.body.name, req.body.description, req.body.team_name)
+    .then(function(data){
+      return res.status(201).send({ data })
+    })
+    .catch(next)
+}
+
+function updateTask(req, res, next){
+  userModel.updateTask(req.params.taskId, req.body.name, req.body.description, req.body.thoughts, req.body.status)
+    .then(function(data){
+      return res.status(201).send({ data })
+    })
+    .catch(next)
+}
 
 module.exports = {
   getOneUser,
   getUserByName,
   createUser,
   getAllTasks,
-  // createTask
+  getOneTask,
+  createTask,
+  updateTask
 }
   
