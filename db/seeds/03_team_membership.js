@@ -1,5 +1,5 @@
 
-exports.seed = function(knex, Promise) {
+exports.seed = function(knex) {
   // Deletes ALL existing entries
   return knex('team_membership').del()
     .then(function () {
@@ -19,7 +19,7 @@ exports.seed = function(knex, Promise) {
       // reset sequence
       return knex.raw(
         `SELECT setval('team_membership_id_seq', (SELECT MAX(id) FROM team_membership));`
-        )
+      )
     })
 };
 
