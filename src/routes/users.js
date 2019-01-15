@@ -7,8 +7,9 @@ router.get('/users', ctrl.getUserByName)
 router.get('/users/:userId', ctrl.getOneUser)
 router.post('/users', ctrl.createUser)
 router.get('/users/:userId/tasks', ctrl.getAllTasks)
-// router.post('/users/:userId/tasks', ctrl.createTask)
-// router.put('/users/:userId/tasks/:taskId', ctrl.updateTask)
+router.get('/users/:userId/tasks/:taskId', ctrl.getOneTask)
+router.post('/users/:userId/tasks', ctrl.createTask)
+router.put('/users/:userId/tasks/:taskId', ctrl.updateTask)
 
 
-module.exports = router
+module.exports = router 

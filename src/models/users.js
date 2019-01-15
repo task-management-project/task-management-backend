@@ -1,12 +1,6 @@
 const knex = require('../../db/index')
 const bcrypt = require('bcrypt')
 
-function getAllTasks(userId){
-  return knex('tasks')
-    .where({'user_id' : userId})
-    .then()
-}
-
 function getOneUser(userId){
   return (
     knex('users')
@@ -42,10 +36,80 @@ function createUser(username, password, position){
     })
 }
 
+function getAllTasks(userId){
+  return knex('tasks')
+    .where({'user_id' : userId})
+    .then()
+}
+
+function getOneTask(userId, taskId){
+  return knex('tasks')
+    .where({'id' : taskId, 'user_id' : userId})
+    .then()
+}
+
+function getTeamByName(team_name){
+  return (
+    knex('teams')
+      .where({ "name" : team_name })
+      .first()
+  )
+}
+
+function autoGenerateTeam(userId, name, description){
+  return (
+    knex('teams')
+      .insert({name: name, description: description})
+      .returning('*')
+  ) 
+    .then(([data]) => {
+      return knex('team_membership')
+        .insert({user_id: userId, team_id: data.id, is_manager: true})
+        .returning('*')
+    })  
+}
+
+function createTask(userId, name, description, team_name){
+  if(team_name){
+    return getTeamByName(team_name)
+      .then(data => {
+        return (
+          knex('tasks')
+            .insert({ user_id: userId, team_id: data.id, name: name, description: description})
+            .returning('*')
+        )
+      })
+  } 
+  return autoGenerateTeam(userId, name, description)
+    .then(data => {
+      return (
+        knex('tasks')
+          .insert({ user_id: userId, team_id: data.id, name: name, description: description})
+          .returning('*')
+      )
+    })
+}
+
+function updateTask(taskId, name, description, thoughts, status){
+  return knex('tasks')
+    .where({'id': taskId})
+    .then(([data]) => {
+      if (!data) throw {status: 400, message: "task doesn't exist"}
+      return knex('tasks')
+        .update({ name: name, description:description, thoughts:thoughts, status:status })
+        .where({'id': taskId})
+        .returning('*')
+    })
+}
+
+
 module.exports = {
   getOneUser,
   getUserByName,
   createUser,
-  getAllTasks
+  getAllTasks,
+  getOneTask,
+  createTask,
+  updateTask
 }
   
