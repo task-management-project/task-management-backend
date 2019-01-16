@@ -33,5 +33,10 @@ const isSelf = (req, res, next) => {
     return next({ status: 401, message: '---Unauthorized' })
   next()
 }
+const isManager = async (req, res, next) => {
+  const [user] = await auth.getUser(req.params.userId);
+  if (!user.is_manager) return next({ status: 401, message: 'Unauthorized Manager' })
+  next()
+}
 
-module.exports = { login, status, authenticated, status, isSelf }
+module.exports = { login, status, authenticated, status, isSelf, isManager }

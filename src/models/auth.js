@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt')
 const users = require('./users')
+const knex = require('../../db/index')
 
 const login = (username, password) => {
   let user
@@ -16,4 +17,9 @@ const login = (username, password) => {
     })
 }
 
-module.exports = { login }
+const getUser = userId => {
+  return knex('team_membership')
+    .where({'team_membership.user_id': userId})
+}
+
+module.exports = { login, getUser }

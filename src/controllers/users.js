@@ -73,13 +73,18 @@ function createTeam(req, res, next){
     .catch(next)
 }
 
-// function getAllMembersAndTasks(req, res, next){
-//   userModel.getAllMembersAndTasks(req.params.userId, req.params.teamId)
-//     .then(function(data){
-//       res.send({ data })
-//     })
-//     .catch(next)
-// }
+function getAllMembersAndTasks(req, res, next){
+  userModel.getUsersInTeam(req.params.teamId)
+    .then(users => {
+      const userIds = users.map(user => user.id)
+      userModel.getTasksForUsers(userIds)
+        .then(function(data){
+          return res.status(201).send({ data })
+        })
+        .catch(next)
+    })
+}
+
 
 module.exports = {
   getOneUser,
@@ -90,6 +95,6 @@ module.exports = {
   createTask,
   updateTask,
   createTeam,
-  //getAllMembersAndTasks
+  getAllMembersAndTasks
 }
   

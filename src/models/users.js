@@ -80,6 +80,33 @@ function createTeam(userId, name, description){
     })  
 }
 
+function getUsersInTeam(teamId){
+  return knex('users')
+    .join('team_membership', 'user_id', 'users.id')
+    .where('team_membership.team_id', teamId)  
+}
+
+function getTasksForUsers(userIds){
+  return knex('tasks')
+    .select('tasks.id', 'name', 'description', 'thoughts', 'isFocus', 'isComplete', 'user_id', 'username', 'position')
+    .join('users', 'users.id', 'tasks.user_id')
+    .whereIn('user_id', userIds)
+}
+
+module.exports = {
+  getOneUser,
+  getUserByName,
+  createUser,
+  getAllTasks,
+  getOneTask,
+  createTask,
+  updateTask,
+  createTeam,
+  getUsersInTeam,
+  getTasksForUsers
+}
+
+
 // * If tasks are connected wich teams
 // function createTask(userId, name, description, team_name){
 //   if(team_name){
@@ -101,6 +128,7 @@ function createTeam(userId, name, description){
 //       )
 //     })
 // }
+
 // function autoGenerateTeam(userId, name, description){
 //   return (
 //     knex('teams')
@@ -113,15 +141,3 @@ function createTeam(userId, name, description){
 //         .returning('*')
 //     })  
 // }
-
-module.exports = {
-  getOneUser,
-  getUserByName,
-  createUser,
-  getAllTasks,
-  getOneTask,
-  createTask,
-  updateTask,
-  createTeam
-}
-  

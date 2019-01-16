@@ -19,8 +19,8 @@ router.put('/users/:userId/tasks/:taskId', auth.authenticated, auth.isSelf, ctrl
 router.get('/users/:userId/member', auth.authenticated, auth.isSelf, ctrl.getUserByName)
 //create a team (and become a manager)
 router.post('/users/:userId/team', auth.authenticated, auth.isSelf, ctrl.createTeam)
-//manger - view all users with tasks for team
-//router.get('/users/:userId/teams/:teamId', auth.authenticated, auth.isSelf, ctrl.getAllMembersAndTasks)
+//manger - view all tasks with users for team
+router.get('/users/:userId/teams/:teamId', auth.authenticated, auth.isSelf, auth.isManager, ctrl.getAllMembersAndTasks)
 
 
 module.exports = router 
