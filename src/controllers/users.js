@@ -85,6 +85,35 @@ function getAllMembersAndTasks(req, res, next){
     })
 }
 
+async function addUserToTeam(req, res, next){
+  try {
+    const teamId = req.params.teamId
+    const user = await userModel.getUserByName(req.body.username)
+    const teamsUserIsIn = await userModel.getTeamsForUser(user.id)
+    if (teamsUserIsIn.includes(teamId)) {
+      return next({ status: 400, message: 'User is already in a team'})
+    } 
+    const data = await userModel.addUserToTeam(user.id, teamId)
+    return res.status(201).send({ data })
+  } catch (err) {
+    return next({ status: 400, message: err})
+  }
+}
+
+async function removeUserFromTeam(req, res, next){
+  try {
+    const teamId = req.params.teamId
+    const user = await userModel.getUserByName(req.body.username)
+    const teamsUserIsIn = await userModel.getTeamsForUser(user.id)
+    if (!teamsUserIsIn.includes(teamId)) {
+      return next({ status: 400, message: 'User is already not in a team'})
+    }
+    const data = await userModel.removeUserFromTeam(user.id, teamId)
+    return res.status(201).send({ data })
+  } catch (err) {
+    return next({ status: 400, message: err})
+  }
+}
 
 module.exports = {
   getOneUser,
@@ -95,6 +124,8 @@ module.exports = {
   createTask,
   updateTask,
   createTeam,
-  getAllMembersAndTasks
+  getAllMembersAndTasks,
+  addUserToTeam,
+  removeUserFromTeam
 }
   

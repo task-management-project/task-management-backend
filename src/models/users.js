@@ -54,7 +54,6 @@ function createTask(userId, name, description){
     .returning('*')
 }
 
-
 function updateTask(taskId, name, description, thoughts, isFocus, isComplete){
   return knex('tasks')
     .where({'id': taskId})
@@ -93,6 +92,25 @@ function getTasksForUsers(userIds){
     .whereIn('user_id', userIds)
 }
 
+function getTeamsForUser(userId){
+  return knex('teams')
+    .join('team_membership', 'team_id', 'teams.id')
+    .where('team_membership.user_id', userId)
+}
+
+function addUserToTeam(userId, teamId){
+  return knex('team_membership')
+    .insert({user_id: userId, team_id: teamId})
+    .returning('*')
+}
+
+function removeUserFromTeam(userId, teamId){
+  return knex('team_membership')
+    .del()
+    .where({user_id: userId, team_id: teamId})
+    .returning('*')
+}
+
 module.exports = {
   getOneUser,
   getUserByName,
@@ -103,7 +121,10 @@ module.exports = {
   updateTask,
   createTeam,
   getUsersInTeam,
-  getTasksForUsers
+  getTasksForUsers,
+  getTeamsForUser,
+  addUserToTeam,
+  removeUserFromTeam
 }
 
 
