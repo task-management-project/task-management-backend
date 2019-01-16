@@ -15,6 +15,8 @@ router.get('/users/:userId/tasks/:taskId', auth.authenticated, auth.isSelf, ctrl
 router.post('/users/:userId/tasks', auth.authenticated, auth.isSelf, ctrl.createTask)
 //update a task
 router.put('/users/:userId/tasks/:taskId', auth.authenticated, auth.isSelf, ctrl.updateTask)
+//delete a task
+router.delete('/users/:userId/tasks/:taskId', auth.authenticated, auth.isSelf, ctrl.deleteTask)
 //get a user by username
 router.get('/users/:userId/member', auth.authenticated, auth.isSelf, ctrl.getUserByName)
 //create a team (and become a manager)
