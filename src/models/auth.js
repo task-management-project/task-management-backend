@@ -11,7 +11,7 @@ const login = (username, password) => {
       return bcrypt.compare(password, data.hashword)
     })
     .then(status => {
-      if (!status) throw { status: 401, message: 'Unauthorized' }
+      if (!status) throw { status: 401, message: 'Unauthorized!!' }
       delete user.password
       return user
     })
