@@ -62,6 +62,14 @@ function updateTask(req, res, next){
     .catch(next)
 }
 
+function deleteTask(req, res, next){
+  userModel.deleteTask(req.params.userId, req.params.taskId)
+    .then(function(data){
+      res.send({ data })
+    })
+    .catch(next)
+}
+
 function createTeam(req, res, next){
   if(!req.body.name && !req.body.description){
     return next({ status: 400, message: 'Bad Request'})
@@ -123,6 +131,7 @@ module.exports = {
   getOneTask,
   createTask,
   updateTask,
+  deleteTask,
   createTeam,
   getAllMembersAndTasks,
   addUserToTeam,

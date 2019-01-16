@@ -66,6 +66,13 @@ function updateTask(taskId, name, description, thoughts, isFocus, isComplete){
     })
 }
 
+function deleteTask(userId, taskId){
+  return knex('tasks')
+    .where({'id' : taskId, 'user_id' : userId})
+    .del()
+    .returning('*')
+}
+
 function createTeam(userId, name, description){
   return (
     knex('teams')
@@ -119,6 +126,7 @@ module.exports = {
   getOneTask,
   createTask,
   updateTask,
+  deleteTask,
   createTeam,
   getUsersInTeam,
   getTasksForUsers,
