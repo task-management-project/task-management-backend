@@ -80,7 +80,7 @@ function createTeam(req, res, next){
   if(!req.body.name && !req.body.description){
     return next({ status: 400, message: 'Bad Request'})
   }
-  userModel.createTeam(req.params.userId, req.body.name, req.body.description)
+  userModel.createTeam(req.params.userId, req.body.name, req.body.description, req.body.team)
     .then(function(data){
       return res.status(201).send({ data })
     })

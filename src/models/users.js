@@ -75,7 +75,7 @@ function deleteTask(userId, taskId){
     .returning('*')
 }
 
-function createTeam(userId, name, description){
+function createTeam(userId, name, description, team){
   return (
     knex('teams')
       .insert({name: name, description: description})
@@ -85,7 +85,13 @@ function createTeam(userId, name, description){
       return knex('team_membership')
         .insert({user_id: userId, team_id: data.id, is_manager: true})
         .returning('*')
-    })  
+    })
+    .then(([data]) => {
+      const toInsert = team.map(ele => ({user_id: ele, team_id: data.team_id, is_manager: false}))
+      return knex('team_membership')
+        .insert(toInsert)
+        .returning('*')
+    })
 }
 
 function getUsersInTeam(teamId){
