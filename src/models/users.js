@@ -9,6 +9,8 @@ function getOneUser(userId){
   )
 }
 
+const getAllUsers = () => knex('users')
+
 function getUserByName(username){
   return (
     knex('users')
@@ -120,6 +122,7 @@ function removeUserFromTeam(userId, teamId){
 
 module.exports = {
   getOneUser,
+  getAllUsers,
   getUserByName,
   createUser,
   getAllTasks,

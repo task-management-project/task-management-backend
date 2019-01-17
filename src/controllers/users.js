@@ -8,6 +8,12 @@ function getOneUser(req, res, next){
     .catch(next)
 }
 
+const getAllUsers = (req, res, next) => {
+  userModel.getAllUsers()
+    .then((data) => res.send({data}))
+    .catch(next)
+}
+
 function getUserByName(req, res, next){
   userModel.getUserByName(req.body.username)
     .then(function(data){
@@ -125,6 +131,7 @@ async function removeUserFromTeam(req, res, next){
 
 module.exports = {
   getOneUser,
+  getAllUsers,
   getUserByName,
   createUser,
   getAllTasks,

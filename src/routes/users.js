@@ -5,6 +5,7 @@ const auth = require('../controllers/auth')
 
 //create a user
 router.post('/users', ctrl.createUser)
+router.get('/users', ctrl.getAllUsers)
 //get a user
 router.get('/users/:userId', auth.authenticated, auth.isSelf, ctrl.getOneUser)
 //get all task for a user
