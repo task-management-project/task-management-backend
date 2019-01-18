@@ -88,15 +88,11 @@ function createTeam(req, res, next){
 }
 
 function getAllMembersAndTasks(req, res, next){
-  userModel.getUsersInTeam(req.params.teamId)
-    .then(users => {
-      const userIds = users.map(user => user.id)
-      userModel.getTasksForUsers(userIds)
-        .then(function(data){
-          return res.status(201).send({ data })
-        })
-        .catch(next)
-    })
+  userModel.getAllMembersAndTasks(req.params.userId)
+  .then(function(data){
+    return res.status(201).send({ data })
+  })
+  .catch(next)
 }
 
 async function addUserToTeam(req, res, next){
