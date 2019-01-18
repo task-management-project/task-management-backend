@@ -1,8 +1,8 @@
-
+## To Install Necessary Packages
 ```
 npm install
 ```
-
+## To Set Up the Server
 ```
 createdb task_management_dev
 ```
