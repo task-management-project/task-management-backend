@@ -128,21 +128,22 @@ function removeUserFromTeam(userId, teamId){
 
 const getAllMembersAndTasks = (id) => {
   return knex('teams')
-          .select('teams.id')
-          .innerJoin('team_membership', 'team_membership.team_id', 'teams.id')
-          .where('team_membership.user_id', id)
-          .then(result => {
-            const users = result.map(ele => ele.id)
-            return knex('team_membership')
-                    .select('users.username', 'tasks.*')
-                    .innerJoin('users', 'users.id', 'team_membership.user_id')
-                    .innerJoin('teams', 'team_membership.team_id', 'teams.id')
-                    .innerJoin('tasks', 'tasks.user_id', 'users.id')
-                    .where((builder) => 
-                    builder.whereIn('team_membership.team_id', users).andWhere('team_membership.is_manager', 'false')
-                    .andWhere('tasks.isFocus', 'true'))
-                    .then(result => console.log(result))
-          })
+    .select('teams.id')
+    .innerJoin('team_membership', 'team_membership.team_id', 'teams.id')
+    .where('team_membership.user_id', id)
+    .then(result => {
+      const users = result.map(ele => ele.id)
+      return knex('team_membership')
+        .select('users.username', 'tasks.*')
+        .innerJoin('users', 'users.id', 'team_membership.user_id')
+        .innerJoin('teams', 'team_membership.team_id', 'teams.id')
+        .innerJoin('tasks', 'tasks.user_id', 'users.id')
+        .where((builder) => 
+          builder.whereIn('team_membership.team_id', users)
+            .andWhere('team_membership.is_manager', 'false')
+            .andWhere('tasks.isFocus', 'true'))
+        .returning('*')
+    })
 }
 
 module.exports = {
