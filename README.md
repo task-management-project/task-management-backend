@@ -27,9 +27,9 @@ Task Manger lets you quickly create and manage tasks and helps you focus on your
 ### Introductions
 
 To use this app, you can either choose below 2 options.
-1. Go to [https://rocky-ridge-33334.herokuapp.com/](https://rocky-ridge-33334.herokuapp.com/).
+1. Go to [https://rocky-ridge-33334.herokuapp.com](https://rocky-ridge-33334.herokuapp.com).
 2. If you run it by forking and cloning github repositories and get the source code, follow below setup process.
-  * Fork and clone this repository and [frontend repository](***).
+  * Fork and clone this repository and [frontend repository](https://github.com/task-management-project/task-management-frontend).
   * Run ```npm install```
   * Run  ```createdb task_management_dev```
   * Run ```npm run latest```
