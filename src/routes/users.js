@@ -23,11 +23,12 @@ router.get('/users/:userId/member', auth.authenticated, auth.isSelf, ctrl.getUse
 //create a team (and become a manager)
 router.post('/users/:userId/team', auth.authenticated, auth.isSelf, ctrl.createTeam)
 //manger - view all tasks with users for team
-router.get('/users/:userId/teams/:teamId', auth.authenticated, auth.isSelf, auth.isManager, ctrl.getAllMembersAndTasks)
+// router.get('/users/:userId/teams/:teamId', auth.authenticated, auth.isSelf, auth.isManager, ctrl.getAllMembersAndTasks)
 //manger - add user to team
 router.post('/users/:userId/teams/:teamId/members', auth.authenticated, auth.isSelf, auth.isManager, ctrl.addUserToTeam)
 //manger - delte user from team
 router.delete('/users/:userId/teams/:teamId/members', auth.authenticated, auth.isSelf, auth.isManager, ctrl.removeUserFromTeam)
+router.get('/users/:userId/team', auth.authenticated, auth.isSelf, ctrl.getAllMembersAndTasks)
 
 
 module.exports = router 
