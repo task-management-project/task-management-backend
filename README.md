@@ -6,9 +6,11 @@ Task Manger lets you quickly create and manage tasks and helps you focus on your
 
 ### Deployed backend
 
+https://rocky-ridge-33334.herokuapp.com/
 
 ### Deployed backend
 
+https://polar-savannah-90234.herokuapp.com/
 
 ### Features
 
