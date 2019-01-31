@@ -4,9 +4,9 @@
 Task Manger is a simple and elegant solution for managing, monitoring, and planing projects and tasks. 
 Task Manger lets you quickly create and manage tasks and helps you focus on your priorities. For manager of project, Task manager helps you to manage your project more efficiently by providing overview page to see team member's tasks.
 
-### Deployed backend
+### Deployed frontend
 
-https://rocky-ridge-33334.herokuapp.com/
+http://singular-focus.herokuapp.com/
 
 ### Deployed backend
 
